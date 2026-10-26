@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#7a1f2b" />
+  <meta name="description" content="LİBERTE Burger & Sandviç — Uzunçarşı menü ve fiyatlar." />
+  <title>LİBERTE — Uzunçarşı Menü</title>
+  <style>
+    @font-face {
+      font-family: "Alfa Slab";
+      src: url("fonts/AlfaSlabOne-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Oswald Local";
+      src: url("fonts/Oswald-Variable.ttf") format("truetype");
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bordo: #7a1f2b;
+      --bordo-deep: #5c1520;
+      --krem: #f3eadc;
+      --krem-deep: #e8dcc8;
+      --yesil: #1f3a32;
+      --yesil-soft: #2f5347;
+      --ink: #1a1412;
+      --muted: #4d5a54;
+      --line: rgba(31, 58, 50, 0.18);
+      --paper: #f7f0e4;
+      --nav-h: 3.15rem;
+      --header-pad: 0.85rem;
+      --max: 72rem;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 0.85rem); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(120% 80% at 0% 0%, rgba(122, 31, 43, 0.06), transparent 55%),
+        radial-gradient(90% 70% at 100% 8%, rgba(31, 58, 50, 0.07), transparent 50%),
+        linear-gradient(180deg, #faf4ea 0%, var(--paper) 35%, #efe4d3 100%);
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.045;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    button { font: inherit; border: 0; background: none; color: inherit; cursor: pointer; }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      width: min(100% - 1.5rem, var(--max));
+      margin-inline: auto;
+    }
+
+    /* —— Marka başlığı: kompakt, ilk ekranı yemeden —— */
+    .brand {
+      padding: calc(0.45rem + env(safe-area-inset-top)) 0 0.35rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.45rem 0.75rem;
+      align-items: center;
+    }
+    .brand__mark {
+      width: 2.2rem;
+      height: 2.2rem;
+      color: var(--yesil);
+    }
+    .brand__text { min-width: 0; }
+    .brand__name {
+      margin: 0;
+      font-family: "Alfa Slab", "Rockwell", "Roboto Slab", Georgia, serif;
+      font-size: clamp(1.55rem, 5.6vw, 2.05rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--bordo);
+      text-transform: uppercase;
+    }
+    .brand__sub {
+      margin: 0.2rem 0 0;
+      font-family: "Oswald Local", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--yesil-soft);
+    }
+    .brand__branch {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin: 0.15rem 0 0;
+      font-family: "Oswald Local", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .brand__branch::before,
+    .brand__branch::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* —— Sabit kategori gezintisi —— */
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      margin: 0.35rem 0 0;
+      padding: 0.35rem 0 0.45rem;
+      background: linear-gradient(180deg, rgba(247, 240, 228, 0.96) 40%, rgba(247, 240, 228, 0.88) 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 0.1rem 0.1rem 0.15rem;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav a {
+      scroll-snap-align: start;
+      flex: 0 0 auto;
+      padding: 0.55rem 0.85rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-family: "Oswald Local", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--yesil);
+      background: rgba(255, 255, 255, 0.35);
+      transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+    }
+    .nav a.is-active,
+    .nav a:focus-visible {
+      color: var(--krem);
+      background: var(--bordo);
+      border-color: var(--bordo-deep);
+      outline: none;
+    }
+
+    main { padding-bottom: 3.5rem; }
+
+    .section {
+      padding: 1.35rem 0 0.35rem;
+      scroll-margin-top: calc(var(--nav-h) + 0.85rem);
+    }
+    .section__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 0 0 0.85rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 2px solid var(--bordo);
+    }
+    .section__title {
+      margin: 0;
+      font-family: "Alfa Slab", "Rockwell", Georgia, serif;
+      font-size: clamp(1.35rem, 4.8vw, 1.85rem);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      color: var(--bordo);
+      text-transform: uppercase;
+    }
+    .section__count {
+      font-family: "Oswald Local", "Bahnschrift Condensed", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .list { display: grid; gap: 0; }
+    .item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 0.85rem;
+      row-gap: 0.2rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+      animation: rise 0.55s var(--ease) both;
+    }
+    .item:last-child { border-bottom: 0; }
+    .item__name {
+      margin: 0;
+      font-family: "Oswald Local", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+      font-size: clamp(1.05rem, 3.6vw, 1.2rem);
+      font-weight: 650;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      color: var(--bordo);
+      text-transform: uppercase;
+    }
+    .item__name .star {
+      display: inline-block;
+      margin-left: 0.2rem;
+      color: var(--bordo);
+      font-size: 0.85em;
+      vertical-align: 0.05em;
+    }
+    .item__price {
+      margin: 0;
+      font-family: "Oswald Local", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+      font-size: clamp(1.08rem, 3.6vw, 1.28rem);
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      color: var(--bordo-deep);
+      white-space: nowrap;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .item__price small {
+      font-size: 0.62em;
+      letter-spacing: 0.08em;
+      margin-left: 0.15rem;
+      opacity: 0.85;
+    }
+    .item__desc {
+      grid-column: 1 / -1;
+      margin: 0.15rem 0 0;
+      max-width: 42rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--yesil-soft);
+    }
+
+    .panel {
+      margin-top: 0.35rem;
+      padding: 0.35rem 0.95rem 0.55rem;
+      background: var(--bordo);
+      color: #f8efe4;
+      border-radius: 0.2rem;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+    .panel .section__head {
+      border-bottom-color: rgba(248, 239, 228, 0.35);
+      margin-bottom: 0.35rem;
+    }
+    .panel .section__title,
+    .panel .section__count,
+    .panel .item__name,
+    .panel .item__price { color: #f8efe4; }
+    .panel .item { border-bottom-color: rgba(248, 239, 228, 0.22); }
+    .panel .item__desc { color: rgba(248, 239, 228, 0.78); }
+
+    .extras-grid {
+      display: grid;
+      gap: 0.55rem;
+      margin-top: 0.25rem;
+    }
+    .extra {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .extra:last-child { border-bottom: 0; }
+    .extra__name {
+      font-family: "Oswald Local", "Bahnschrift Condensed", sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--bordo);
+    }
+    .extra__price {
+      font-family: "Oswald Local", "Bahnschrift Condensed", sans-serif;
+      font-size: 1.05rem;
+      font-weight: 650;
+      color: var(--yesil);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .extra__price small,
+    .item__price small { font-size: 0.62em; margin-left: 0.12rem; }
+
+    .note {
+      margin: 1.6rem 0 0;
+      padding: 0.85rem 0 0;
+      border-top: 1px solid var(--line);
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 0.5rem;
+      padding: 1.1rem 0 calc(1.4rem + env(safe-area-inset-bottom));
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.2rem;
+      justify-content: space-between;
+      font-family: "Oswald Local", "Bahnschrift Condensed", sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(0.45rem); }
+      to { opacity: 1; transform: none; }
+    }
+    .item:nth-child(1) { animation-delay: 0.02s; }
+    .item:nth-child(2) { animation-delay: 0.05s; }
+    .item:nth-child(3) { animation-delay: 0.08s; }
+    .item:nth-child(4) { animation-delay: 0.11s; }
+    .item:nth-child(5) { animation-delay: 0.14s; }
+    .item:nth-child(6) { animation-delay: 0.17s; }
+    .item:nth-child(7) { animation-delay: 0.2s; }
+    .item:nth-child(8) { animation-delay: 0.23s; }
+
+    @media (min-width: 640px) {
+      .shell { width: min(100% - 2.5rem, var(--max)); }
+      .brand { grid-template-columns: auto 1fr auto; }
+      .brand__branch {
+        grid-column: auto;
+        max-width: 12rem;
+        margin: 0;
+      }
+      .brand__branch::before { display: none; }
+      .list--split {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rem;
+      }
+      .list--split .item:nth-child(odd):last-child {
+        border-bottom: 1px solid var(--line);
+      }
+    }
+
+    @media (min-width: 960px) {
+      .shell { width: min(100% - 3rem, 58rem); }
+      .list--split { column-gap: 2.75rem; }
+      .panel { margin-top: 0.55rem; }
+      .brand__name { font-size: 2.2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .item { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="brand">
+      <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M32.2 6.4c-.4 5.8-2.8 10.6-7.1 14.6-3.7 3.4-6.1 7.5-6.4 12.6-.2 3.7 1 7.1 3.4 9.9-4.2-1.4-7.4-4.6-8.9-8.9-2.4-6.8.4-14.2 6.4-18.7C24.4 11.6 28.4 8.5 32.2 6.4Zm-.4 0c.5 5.9 3 10.7 7.4 14.7 3.7 3.3 6.1 7.4 6.4 12.5.2 3.7-1 7.1-3.4 9.9 4.2-1.4 7.4-4.6 8.9-8.9 2.4-6.8-.4-14.2-6.4-18.7C39.8 11.6 35.8 8.5 31.8 6.4Zm.2 21.1c-5.4 1.8-9.4 6.4-10.2 12.1-.7 5.1 1.4 10 5.5 13.1-1.7 1.4-3.8 2.3-6.1 2.5 5.6 5.2 14 6.1 20.5 1.9 6.6 4.2 14.9 3.3 20.5-1.9-2.3-.2-4.4-1.1-6.1-2.5 4.1-3.1 6.2-8 5.5-13.1-.8-5.7-4.8-10.3-10.2-12.1-3.1 4.6-7.9 7.5-13.4 7.5s-10.3-2.9-13.4-7.5Z"/>
+      </svg>
+      <div class="brand__text">
+        <p class="brand__name">LİBERTE</p>
+        <p class="brand__sub">Burger &amp; Sandviç</p>
+      </div>
+      <p class="brand__branch">Uzunçarşı</p>
+    </header>
+
+    <div class="nav-wrap">
+      <nav class="nav" aria-label="Menü kategorileri" id="cat-nav">
+        <a href="#burger" data-cat="burger">Burger</a>
+        <a href="#chicken" data-cat="chicken">Chicken</a>
+        <a href="#sandvic" data-cat="sandvic">Sandviç</a>
+        <a href="#fries" data-cat="fries">Fries</a>
+        <a href="#tatli" data-cat="tatli">Tatlı</a>
+        <a href="#ekstralar" data-cat="ekstralar">Ekstralar</a>
+        <a href="#icecekler" data-cat="icecekler">İçecekler</a>
+      </nav>
+    </div>
+
+    <main>
+      <div class="layout">
+        <section class="section section--span" id="burger" data-section>
+          <div class="section__head">
+            <h2 class="section__title">Burger</h2>
+            <span class="section__count">8 ürün</span>
+          </div>
+          <div class="list list--split">
+            <article class="item">
+              <h3 class="item__name">Çizburger</h3>
+              <p class="item__price">439<small>TL</small></p>
+              <p class="item__desc">90 gr dana döş, burger peyniri, turşu, Liberte sos</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Old School</h3>
+              <p class="item__price">469<small>TL</small></p>
+              <p class="item__desc">90 gr dana döş, burger peyniri, marul, domates, turşu, Liberte sos</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Oklahoma</h3>
+              <p class="item__price">489<small>TL</small></p>
+              <p class="item__desc">90 gr dana döş, burger peyniri, soğan, turşu, Liberte sos</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Truffle</h3>
+              <p class="item__price">499<small>TL</small></p>
+              <p class="item__desc">90 gr dana döş, burger peyniri, turşu, truff mayo</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Cevabi<span class="star" aria-label="özel">*</span></h3>
+              <p class="item__price">529<small>TL</small></p>
+              <p class="item__desc">90 gr dana döş, burger peyniri, soğan, ajvar, tuzlu kaymak</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Vişne Tulum<span class="star" aria-label="özel">*</span></h3>
+              <p class="item__price">529<small>TL</small></p>
+              <p class="item__desc">90 gr dana köftesi, vişne reçeli, erzincan tulum</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Adige<span class="star" aria-label="özel">*</span></h3>
+              <p class="item__price">529<small>TL</small></p>
+              <p class="item__desc">90 gr dana döş, soğan, isli çerkez, dejuna, isli et</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Balkan<span class="star" aria-label="özel">*</span></h3>
+              <p class="item__price">529<small>TL</small></p>
+              <p class="item__desc">90 gr dana döş, burger peyniri, isli et, soka</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="chicken" data-section>
+          <div class="section__head">
+            <h2 class="section__title">Chicken</h2>
+            <span class="section__count">4 ürün</span>
+          </div>
+          <div class="list">
+            <article class="item">
+              <h3 class="item__name">Classic</h3>
+              <p class="item__price">410<small>TL</small></p>
+              <p class="item__desc">Çıtır tavuk, burger peyniri, turşu, Sezar marul, Liberte sos</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Spicy Honey</h3>
+              <p class="item__price">410<small>TL</small></p>
+              <p class="item__desc">Çıtır tavuk, burger peyniri, turşu, spicy honey, Beyaz sos</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">BBQ Chicken</h3>
+              <p class="item__price">410<small>TL</small></p>
+              <p class="item__desc">Çıtır tavuk, burger peyniri, turşu, Sezar marul, BBQ</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Truffle</h3>
+              <p class="item__price">410<small>TL</small></p>
+              <p class="item__desc">Çıtır tavuk, burger peyniri, turşu, Sezar marul, truff mayo</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="sandvic" data-section>
+          <div class="section__head">
+            <h2 class="section__title">Sandviç</h2>
+            <span class="section__count">4 ürün</span>
+          </div>
+          <div class="list">
+            <article class="item">
+              <h3 class="item__name">Basic</h3>
+              <p class="item__price">200<small>TL</small></p>
+              <p class="item__desc">Ciabatta, labne, kaşar, hindi füme, domates, roka</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Ajvar</h3>
+              <p class="item__price">260<small>TL</small></p>
+              <p class="item__desc">Ciabatta, ajvar, Stracciatella, hindi füme, domates, roka</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Pesto</h3>
+              <p class="item__price">260<small>TL</small></p>
+              <p class="item__desc">Ciabatta, pesto, Stracciatella, hindi füme, domates, roka</p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Tony</h3>
+              <p class="item__price">290<small>TL</small></p>
+              <p class="item__desc">Ciabatta, ton balığı, limon zest, labne, Kewpie, domates, roka</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="fries" data-section>
+          <div class="panel">
+            <div class="section__head">
+              <h2 class="section__title">Fries</h2>
+              <span class="section__count">4 ürün</span>
+            </div>
+            <div class="list">
+              <article class="item">
+                <h3 class="item__name">Pattie on Fries</h3>
+                <p class="item__price">390<small>TL</small></p>
+              </article>
+              <article class="item">
+                <h3 class="item__name">Chicken on Fries</h3>
+                <p class="item__price">320<small>TL</small></p>
+              </article>
+              <article class="item">
+                <h3 class="item__name">Parmesan</h3>
+                <p class="item__price">90<small>TL</small></p>
+              </article>
+              <article class="item">
+                <h3 class="item__name">Keş Peyniri</h3>
+                <p class="item__price">70<small>TL</small></p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="tatli" data-section>
+          <div class="section__head">
+            <h2 class="section__title">Tatlı</h2>
+            <span class="section__count">1 ürün</span>
+          </div>
+          <div class="list">
+            <article class="item">
+              <h3 class="item__name">Of Liberte</h3>
+              <p class="item__price">270<small>TL</small></p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="ekstralar" data-section>
+          <div class="section__head">
+            <h2 class="section__title">Ekstralar</h2>
+            <span class="section__count">3 ürün</span>
+          </div>
+          <div class="extras-grid">
+            <div class="extra">
+              <span class="extra__name">90 gr Köfte</span>
+              <span class="extra__price">150<small>TL</small></span>
+            </div>
+            <div class="extra">
+              <span class="extra__name">Burger Peyniri</span>
+              <span class="extra__price">15<small>TL</small></span>
+            </div>
+            <div class="extra">
+              <span class="extra__name">Sos</span>
+              <span class="extra__price">40<small>TL</small></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section--span" id="icecekler" data-section>
+          <div class="section__head">
+            <h2 class="section__title">İçecekler</h2>
+            <span class="section__count">12 ürün</span>
+          </div>
+          <div class="list list--split">
+            <article class="item">
+              <h3 class="item__name">Coca-Cola</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Coca-Cola Zero</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Fanta</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Sprite</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Lipton Ice Tea Şeftali</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Lipton Ice Tea Mango</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Lipton Ice Tea Limon</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Niğde Gazoz</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">Özerhisar Ayran</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">LİBERTE Sade Ayran</h3>
+              <p class="item__price">99<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">LİBERTE İsli Ayran</h3>
+              <p class="item__price">120<small>TL</small></p>
+            </article>
+            <article class="item">
+              <h3 class="item__name">LİBERTE Acılı Ayran</h3>
+              <p class="item__price">120<small>TL</small></p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <p class="note">Fiyatlar LİBERTE menü kartından aktarılmıştır. Alerjen bilgisi için işletmeye danışabilirsiniz.</p>
+    </main>
+
+    <footer>
+      <span>© LİBERTE · Uzunçarşı</span>
+      <span>Yalnızca menü</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      // Kategori çubuğunda aktif bölümü vurgula; içerik JS olmadan da görünür.
+      var nav = document.getElementById("cat-nav");
+      if (!nav) return;
+      var links = Array.prototype.slice.call(nav.querySelectorAll("a[data-cat]"));
+      var sections = Array.prototype.slice.call(document.querySelectorAll("[data-section]"));
+      if (!links.length || !sections.length || !("IntersectionObserver" in window)) {
+        if (links[0]) links[0].classList.add("is-active");
+        return;
+      }
+
+      function setActive(id) {
+        links.forEach(function (link) {
+          var on = link.getAttribute("data-cat") === id;
+          link.classList.toggle("is-active", on);
+          if (on) {
+            var left = link.offsetLeft - 24;
+            nav.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+          }
+        });
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        var visible = entries
+          .filter(function (e) { return e.isIntersecting; })
+          .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; })[0];
+        if (visible && visible.target && visible.target.id) setActive(visible.target.id);
+      }, {
+        rootMargin: "-28% 0px -55% 0px",
+        threshold: [0.1, 0.25, 0.5, 0.75]
+      });
+
+      sections.forEach(function (section) { observer.observe(section); });
+      setActive(sections[0].id);
+
+      links.forEach(function (link) {
+        link.addEventListener("click", function () {
+          setActive(link.getAttribute("data-cat"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
