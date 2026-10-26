@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#7a1f2b" />
   <meta name="description" content="LİBERTE Burger & Sandviç — Uzunçarşı menü ve fiyatlar." />
   <title>LİBERTE — Uzunçarşı Menü</title>
+  <link rel="canonical" href="https://uzuncarsi.libertegastrocafe.com/" />
   <style>
     @font-face {
       font-family: "Alfa Slab";
@@ -133,98 +134,87 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      margin: 0.35rem 0 0;
-      padding: 0.35rem 0 0.45rem;
-      background: linear-gradient(180deg, rgba(247, 240, 228, 0.96) 40%, rgba(247, 240, 228, 0.88) 100%);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      margin: 0.45rem 0 0;
+      padding: 0.45rem 0;
+      background: rgba(247, 240, 228, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(28, 20, 16, 0.04);
     }
     .nav {
       display: flex;
-      gap: 0.4rem;
+      gap: 0.3rem;
       overflow-x: auto;
       overscroll-behavior-x: contain;
       scroll-snap-type: x proximity;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
-      padding: 0.1rem 0.1rem 0.15rem;
+      padding: 0.05rem;
     }
     .nav::-webkit-scrollbar { display: none; }
     .nav a {
       scroll-snap-align: start;
       flex: 0 0 auto;
-      padding: 0.55rem 0.85rem;
-      border: 1px solid transparent;
+      padding: 0.5rem 0.8rem;
       border-radius: 999px;
       font-family: "Oswald Local", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--yesil);
-      background: rgba(255, 255, 255, 0.35);
-      transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+      color: var(--yesil-soft);
+      transition: background 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
     }
     .nav a.is-active,
     .nav a:focus-visible {
-      color: var(--krem);
+      color: #f8efe4;
       background: var(--bordo);
-      border-color: var(--bordo-deep);
       outline: none;
     }
 
-    main { padding-bottom: 3.5rem; }
+    main { padding-bottom: 1.5rem; }
 
     .section {
-      padding: 1.35rem 0 0.35rem;
+      padding: 1.5rem 0 0.45rem;
       scroll-margin-top: calc(var(--nav-h) + 0.85rem);
     }
     .section__head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      margin: 0 0 0.85rem;
-      padding-bottom: 0.45rem;
-      border-bottom: 2px solid var(--bordo);
+      margin: 0 0 0.7rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1.5px solid var(--bordo);
     }
     .section__title {
       margin: 0;
       font-family: "Alfa Slab", "Rockwell", Georgia, serif;
-      font-size: clamp(1.35rem, 4.8vw, 1.85rem);
-      letter-spacing: 0.06em;
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
+      letter-spacing: 0.08em;
       line-height: 1;
       color: var(--bordo);
       text-transform: uppercase;
     }
-    .section__count {
-      font-family: "Oswald Local", "Bahnschrift Condensed", sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
+    .section__count { display: none; }
 
     .list { display: grid; gap: 0; }
     .item {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      column-gap: 0.85rem;
-      row-gap: 0.2rem;
-      padding: 0.85rem 0;
+      padding: 0.95rem 0;
       border-bottom: 1px solid var(--line);
-      align-items: start;
       animation: rise 0.55s var(--ease) both;
     }
     .item:last-child { border-bottom: 0; }
+    .item__top {
+      display: grid;
+      grid-template-columns: auto minmax(0.75rem, 1fr) auto;
+      align-items: baseline;
+      column-gap: 0.55rem;
+    }
     .item__name {
       margin: 0;
+      min-width: 0;
       font-family: "Oswald Local", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
-      font-size: clamp(1.05rem, 3.6vw, 1.2rem);
+      font-size: clamp(1.05rem, 3.6vw, 1.22rem);
       font-weight: 650;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.045em;
       line-height: 1.15;
       color: var(--bordo);
       text-transform: uppercase;
@@ -235,6 +225,11 @@
       color: var(--bordo);
       font-size: 0.85em;
       vertical-align: 0.05em;
+    }
+    .item__dots {
+      border-bottom: 1px dotted rgba(122, 31, 43, 0.35);
+      margin: 0 0.15rem 0.28rem;
+      min-width: 0.75rem;
     }
     .item__price {
       margin: 0;
@@ -252,47 +247,52 @@
       font-size: 0.62em;
       letter-spacing: 0.08em;
       margin-left: 0.15rem;
-      opacity: 0.85;
+      opacity: 0.8;
     }
     .item__desc {
       grid-column: 1 / -1;
-      margin: 0.15rem 0 0;
-      max-width: 42rem;
-      font-size: 0.9rem;
-      line-height: 1.4;
+      margin: 0.05rem 0 0;
+      max-width: 40rem;
+      font-size: 0.88rem;
+      line-height: 1.45;
       color: var(--yesil-soft);
     }
 
     .panel {
-      margin-top: 0.35rem;
-      padding: 0.35rem 0.95rem 0.55rem;
-      background: var(--bordo);
+      margin-top: 0.2rem;
+      padding: 0.55rem 1rem 0.65rem;
+      background:
+        linear-gradient(160deg, rgba(255,255,255,0.06), transparent 40%),
+        var(--bordo);
       color: #f8efe4;
-      border-radius: 0.2rem;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      border-radius: 0.35rem;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 10px 28px rgba(92, 21, 32, 0.18);
     }
     .panel .section__head {
-      border-bottom-color: rgba(248, 239, 228, 0.35);
-      margin-bottom: 0.35rem;
+      border-bottom-color: rgba(248, 239, 228, 0.32);
+      margin-bottom: 0.2rem;
     }
     .panel .section__title,
-    .panel .section__count,
     .panel .item__name,
     .panel .item__price { color: #f8efe4; }
-    .panel .item { border-bottom-color: rgba(248, 239, 228, 0.22); }
+    .panel .item__dots { border-bottom-color: rgba(248, 239, 228, 0.4); }
+    .panel .item { border-bottom-color: rgba(248, 239, 228, 0.18); }
     .panel .item__desc { color: rgba(248, 239, 228, 0.78); }
 
     .extras-grid {
       display: grid;
-      gap: 0.55rem;
-      margin-top: 0.25rem;
+      gap: 0;
+      margin-top: 0.1rem;
+      padding: 0.15rem 0 0;
     }
     .extra {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: auto minmax(0.75rem, 1fr) auto;
       align-items: baseline;
-      gap: 1rem;
-      padding: 0.7rem 0;
+      column-gap: 0.55rem;
+      padding: 0.8rem 0;
       border-bottom: 1px solid var(--line);
     }
     .extra:last-child { border-bottom: 0; }
@@ -303,36 +303,28 @@
       text-transform: uppercase;
       color: var(--bordo);
     }
+    .extra__dots {
+      border-bottom: 1px dotted rgba(122, 31, 43, 0.35);
+      margin-bottom: 0.28rem;
+    }
     .extra__price {
       font-family: "Oswald Local", "Bahnschrift Condensed", sans-serif;
       font-size: 1.05rem;
       font-weight: 650;
-      color: var(--yesil);
+      color: var(--bordo-deep);
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
     }
     .extra__price small,
     .item__price small { font-size: 0.62em; margin-left: 0.12rem; }
 
-    .note {
-      margin: 1.6rem 0 0;
-      padding: 0.85rem 0 0;
-      border-top: 1px solid var(--line);
-      font-size: 0.78rem;
-      letter-spacing: 0.02em;
-      color: var(--muted);
-    }
-
     footer {
-      margin-top: 0.5rem;
-      padding: 1.1rem 0 calc(1.4rem + env(safe-area-inset-bottom));
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 1.2rem;
-      justify-content: space-between;
+      margin-top: 1.75rem;
+      padding: 1.15rem 0 calc(1.5rem + env(safe-area-inset-bottom));
+      text-align: center;
       font-family: "Oswald Local", "Bahnschrift Condensed", sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--muted);
       border-top: 1px solid var(--line);
@@ -406,43 +398,67 @@
           </div>
           <div class="list list--split">
             <article class="item">
-              <h3 class="item__name">Çizburger</h3>
-              <p class="item__price">439<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Çizburger</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">439<small>TL</small></p>
+              </div>
               <p class="item__desc">90 gr dana döş, burger peyniri, turşu, Liberte sos</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Old School</h3>
-              <p class="item__price">469<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Old School</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">469<small>TL</small></p>
+              </div>
               <p class="item__desc">90 gr dana döş, burger peyniri, marul, domates, turşu, Liberte sos</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Oklahoma</h3>
-              <p class="item__price">489<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Oklahoma</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">489<small>TL</small></p>
+              </div>
               <p class="item__desc">90 gr dana döş, burger peyniri, soğan, turşu, Liberte sos</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Truffle</h3>
-              <p class="item__price">499<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Truffle</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">499<small>TL</small></p>
+              </div>
               <p class="item__desc">90 gr dana döş, burger peyniri, turşu, truff mayo</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Cevabi<span class="star" aria-label="özel">*</span></h3>
-              <p class="item__price">529<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Cevabi<span class="star" aria-label="özel">*</span></h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">529<small>TL</small></p>
+              </div>
               <p class="item__desc">90 gr dana döş, burger peyniri, soğan, ajvar, tuzlu kaymak</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Vişne Tulum<span class="star" aria-label="özel">*</span></h3>
-              <p class="item__price">529<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Vişne Tulum<span class="star" aria-label="özel">*</span></h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">529<small>TL</small></p>
+              </div>
               <p class="item__desc">90 gr dana köftesi, vişne reçeli, erzincan tulum</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Adige<span class="star" aria-label="özel">*</span></h3>
-              <p class="item__price">529<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Adige<span class="star" aria-label="özel">*</span></h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">529<small>TL</small></p>
+              </div>
               <p class="item__desc">90 gr dana döş, soğan, isli çerkez, dejuna, isli et</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Balkan<span class="star" aria-label="özel">*</span></h3>
-              <p class="item__price">529<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Balkan<span class="star" aria-label="özel">*</span></h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">529<small>TL</small></p>
+              </div>
               <p class="item__desc">90 gr dana döş, burger peyniri, isli et, soka</p>
             </article>
           </div>
@@ -455,23 +471,35 @@
           </div>
           <div class="list">
             <article class="item">
-              <h3 class="item__name">Classic</h3>
-              <p class="item__price">410<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Classic</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">410<small>TL</small></p>
+              </div>
               <p class="item__desc">Çıtır tavuk, burger peyniri, turşu, Sezar marul, Liberte sos</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Spicy Honey</h3>
-              <p class="item__price">410<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Spicy Honey</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">410<small>TL</small></p>
+              </div>
               <p class="item__desc">Çıtır tavuk, burger peyniri, turşu, spicy honey, Beyaz sos</p>
             </article>
             <article class="item">
-              <h3 class="item__name">BBQ Chicken</h3>
-              <p class="item__price">410<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">BBQ Chicken</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">410<small>TL</small></p>
+              </div>
               <p class="item__desc">Çıtır tavuk, burger peyniri, turşu, Sezar marul, BBQ</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Truffle</h3>
-              <p class="item__price">410<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Truffle</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">410<small>TL</small></p>
+              </div>
               <p class="item__desc">Çıtır tavuk, burger peyniri, turşu, Sezar marul, truff mayo</p>
             </article>
           </div>
@@ -484,23 +512,35 @@
           </div>
           <div class="list">
             <article class="item">
-              <h3 class="item__name">Basic</h3>
-              <p class="item__price">200<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Basic</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">200<small>TL</small></p>
+              </div>
               <p class="item__desc">Ciabatta, labne, kaşar, hindi füme, domates, roka</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Ajvar</h3>
-              <p class="item__price">260<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Ajvar</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">260<small>TL</small></p>
+              </div>
               <p class="item__desc">Ciabatta, ajvar, Stracciatella, hindi füme, domates, roka</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Pesto</h3>
-              <p class="item__price">260<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Pesto</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">260<small>TL</small></p>
+              </div>
               <p class="item__desc">Ciabatta, pesto, Stracciatella, hindi füme, domates, roka</p>
             </article>
             <article class="item">
-              <h3 class="item__name">Tony</h3>
-              <p class="item__price">290<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Tony</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">290<small>TL</small></p>
+              </div>
               <p class="item__desc">Ciabatta, ton balığı, limon zest, labne, Kewpie, domates, roka</p>
             </article>
           </div>
@@ -514,21 +554,33 @@
             </div>
             <div class="list">
               <article class="item">
+              <div class="item__top">
                 <h3 class="item__name">Pattie on Fries</h3>
+                <span class="item__dots" aria-hidden="true"></span>
                 <p class="item__price">390<small>TL</small></p>
-              </article>
+              </div>
+            </article>
               <article class="item">
+              <div class="item__top">
                 <h3 class="item__name">Chicken on Fries</h3>
+                <span class="item__dots" aria-hidden="true"></span>
                 <p class="item__price">320<small>TL</small></p>
-              </article>
+              </div>
+            </article>
               <article class="item">
+              <div class="item__top">
                 <h3 class="item__name">Parmesan</h3>
+                <span class="item__dots" aria-hidden="true"></span>
                 <p class="item__price">90<small>TL</small></p>
-              </article>
+              </div>
+            </article>
               <article class="item">
+              <div class="item__top">
                 <h3 class="item__name">Keş Peyniri</h3>
+                <span class="item__dots" aria-hidden="true"></span>
                 <p class="item__price">70<small>TL</small></p>
-              </article>
+              </div>
+            </article>
             </div>
           </div>
         </section>
@@ -541,9 +593,12 @@
             </div>
             <div class="list">
               <article class="item">
+              <div class="item__top">
                 <h3 class="item__name">Of Liberte</h3>
+                <span class="item__dots" aria-hidden="true"></span>
                 <p class="item__price">270<small>TL</small></p>
-              </article>
+              </div>
+            </article>
             </div>
           </div>
         </section>
@@ -556,14 +611,17 @@
           <div class="extras-grid">
             <div class="extra">
               <span class="extra__name">90 gr Köfte</span>
+              <span class="extra__dots" aria-hidden="true"></span>
               <span class="extra__price">150<small>TL</small></span>
             </div>
             <div class="extra">
               <span class="extra__name">Burger Peyniri</span>
+              <span class="extra__dots" aria-hidden="true"></span>
               <span class="extra__price">15<small>TL</small></span>
             </div>
             <div class="extra">
               <span class="extra__name">Sos</span>
+              <span class="extra__dots" aria-hidden="true"></span>
               <span class="extra__price">40<small>TL</small></span>
             </div>
           </div>
@@ -576,84 +634,131 @@
           </div>
           <div class="list list--split">
             <article class="item">
-              <h3 class="item__name">Su</h3>
-              <p class="item__price">30<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Su</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">30<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Maden Suyu</h3>
-              <p class="item__price">70<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Maden Suyu</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">70<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Limonata</h3>
-              <p class="item__price">70<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Limonata</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">70<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Çay</h3>
-              <p class="item__price">50<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Çay</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">50<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Filtre Kahve</h3>
-              <p class="item__price">100<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Filtre Kahve</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">100<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Coca-Cola</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Coca-Cola</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Coca-Cola Zero</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Coca-Cola Zero</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Fanta</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Fanta</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Sprite</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Sprite</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Lipton Ice Tea Şeftali</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Lipton Ice Tea Şeftali</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Lipton Ice Tea Mango</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Lipton Ice Tea Mango</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Lipton Ice Tea Limon</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Lipton Ice Tea Limon</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Niğde Gazoz</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Niğde Gazoz</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">Özerhisar Ayran</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">Özerhisar Ayran</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">LİBERTE Sade Ayran</h3>
-              <p class="item__price">99<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">LİBERTE Sade Ayran</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">99<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">LİBERTE İsli Ayran</h3>
-              <p class="item__price">120<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">LİBERTE İsli Ayran</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">120<small>TL</small></p>
+              </div>
             </article>
             <article class="item">
-              <h3 class="item__name">LİBERTE Acılı Ayran</h3>
-              <p class="item__price">120<small>TL</small></p>
+              <div class="item__top">
+                <h3 class="item__name">LİBERTE Acılı Ayran</h3>
+                <span class="item__dots" aria-hidden="true"></span>
+                <p class="item__price">120<small>TL</small></p>
+              </div>
             </article>
           </div>
         </section>
       </div>
 
-      <p class="note">Fiyatlar LİBERTE menü kartından aktarılmıştır. Alerjen bilgisi için işletmeye danışabilirsiniz.</p>
     </main>
 
-    <footer>
-      <span>© LİBERTE · Uzunçarşı</span>
-      <span>Yalnızca menü</span>
-    </footer>
+    <footer>© LİBERTE · Uzunçarşı</footer>
   </div>
 
   <script>
